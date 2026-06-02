@@ -25,6 +25,33 @@
   --warn: #fb923c;
 }
 
+@layer base {
+  html, body {
+    font-family: var(--font-mono);
+    background-color: var(--surface);
+    color: #a1a1aa;
+  }
+}
+
+.terminal-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.scanline {
+  background: linear-gradient(to bottom, transparent 50%, rgba(16, 185, 129, 0.025) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-ticker { animation: ticker 40s linear infinite; }
+
 /*
  * Design system definition.
  *
