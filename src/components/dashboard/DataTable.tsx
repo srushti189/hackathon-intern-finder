@@ -7,8 +7,8 @@ function fmtStipend(n: number, type: Opportunity["type"]) {
 
 function fmtDeadline(days: number) {
   if (days <= 0) return "CLOSED";
-  if (days < 1) return "<1d";
-  return `${days.toString().padStart(2, "0")}d ${(Math.floor(Math.random() * 23)).toString().padStart(2, "0")}h`;
+  const hours = (days * 7) % 24; // deterministic
+  return `${days.toString().padStart(2, "0")}d ${hours.toString().padStart(2, "0")}h`;
 }
 
 function providerBadge(src: Opportunity["source"]) {
