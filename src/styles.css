@@ -4,6 +4,27 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme inline {
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --color-brand: var(--brand);
+  --color-brand-dim: var(--brand-dim);
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+  --color-grid-line: var(--grid-line);
+  --color-danger: var(--danger);
+  --color-warn: var(--warn);
+}
+
+:root {
+  --brand: #10b981;
+  --brand-dim: #047857;
+  --surface: #09090b;
+  --panel: #18181b;
+  --grid-line: #18181b;
+  --danger: #f87171;
+  --warn: #fb923c;
+}
+
 /*
  * Design system definition.
  *
