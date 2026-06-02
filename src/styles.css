@@ -4,6 +4,54 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme inline {
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --color-brand: var(--brand);
+  --color-brand-dim: var(--brand-dim);
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+  --color-grid-line: var(--grid-line);
+  --color-danger: var(--danger);
+  --color-warn: var(--warn);
+}
+
+:root {
+  --brand: #10b981;
+  --brand-dim: #047857;
+  --surface: #09090b;
+  --panel: #18181b;
+  --grid-line: #18181b;
+  --danger: #f87171;
+  --warn: #fb923c;
+}
+
+@layer base {
+  html, body {
+    font-family: var(--font-mono);
+    background-color: var(--surface);
+    color: #a1a1aa;
+  }
+}
+
+.terminal-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.scanline {
+  background: linear-gradient(to bottom, transparent 50%, rgba(16, 185, 129, 0.025) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-ticker { animation: ticker 40s linear infinite; }
+
 /*
  * Design system definition.
  *
