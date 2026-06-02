@@ -1,86 +1,1189 @@
-export type Source = "INTERNSHALA" | "UNSTOP" | "DEVFOLIO";
-export type OppType = "internship" | "hackathon";
-
 export interface Opportunity {
   id: string;
   title: string;
   company: string;
-  source: Source;
-  type: OppType;
+  source: string;
+  type: string;
   category: string;
   location: string;
-  stipend: number; // monthly INR for internships, prize pool for hackathons
-  deadlineDays: number; // days until deadline
+  stipend: number;
+  compensation: string;
+  duration: string;
+  skills: string[];
+  url: string;
+  deadlineDays: number;
   postedDays: number;
 }
 
-const CATEGORIES = [
-  "Software_Eng", "Frontend_Dev", "Backend_Dev", "Data_Science",
-  "AI_Research", "Web3", "Cyber_Security", "Mobile", "Design_System", "DevOps",
-];
-const LOCATIONS = [
-  "Remote", "Bangalore_IN", "Delhi_NCR", "Mumbai_IN", "Hyderabad_IN",
-  "Pune_IN", "San_Francisco_US", "London_UK", "Berlin_DE", "Global",
-];
-const COMPANIES = [
-  "Zerodha", "Razorpay", "Postman", "CRED", "Swiggy", "Flipkart",
-  "Atlassian", "Stripe", "Vercel", "Linear", "Notion", "ETHGlobal",
-  "Devfolio", "HackerEarth", "GeeksForGeeks", "Microsoft", "Google",
-  "Cloudflare", "Cred Labs", "Polygon",
-];
-const HACK_NAMES = [
-  "ETHGlobal Bangalore", "Hack The North", "Global AI Hackathon",
-  "Solana Speedrun", "DevPost Open Source", "Smart India Hackathon",
-  "FOSS United Hack", "Polygon BUIDL IT", "HackMIT", "LLM Agent Jam",
-  "Web3 Builders Quest", "Rust Bootcamp Hack", "Climate Tech Sprint",
-];
-const INTERN_TITLES = [
-  "Software Engineer Intern", "Frontend Developer Intern",
-  "Backend Engineer Intern", "Data Science Intern", "ML Research Intern",
-  "Smart Contract Engineer", "Mobile Dev Intern", "DevOps Intern",
-  "UI/UX Research Intern", "Security Research Intern",
-  "Platform Engineer Intern", "Growth Engineer Intern",
-];
-
-function seeded(seed: number) {
-  let s = seed >>> 0;
-  return () => {
-    s = (s * 1664525 + 1013904223) >>> 0;
-    return s / 0xffffffff;
-  };
-}
-
-function pick<T>(rng: () => number, arr: T[]): T {
-  return arr[Math.floor(rng() * arr.length)];
-}
-
-export const OPPORTUNITIES: Opportunity[] = (() => {
-  const rng = seeded(42);
-  const out: Opportunity[] = [];
-  for (let i = 0; i < 220; i++) {
-    const isHack = rng() < 0.32;
-    const source: Source = isHack
-      ? (rng() < 0.5 ? "UNSTOP" : "DEVFOLIO")
-      : "INTERNSHALA";
-    const cat = pick(rng, CATEGORIES);
-    const loc = pick(rng, LOCATIONS);
-    const company = pick(rng, COMPANIES);
-    const title = isHack ? pick(rng, HACK_NAMES) : pick(rng, INTERN_TITLES);
-    const stipend = isHack
-      ? Math.floor(rng() * 800000) + 50000
-      : Math.floor(rng() * 80000) + 8000;
-    out.push({
-      id: `${source.slice(0, 2)}-${(1000 + i).toString()}`,
-      title,
-      company,
-      source,
-      type: isHack ? "hackathon" : "internship",
-      category: cat,
-      location: loc,
-      stipend,
-      deadlineDays: Math.floor(rng() * 45),
-      postedDays: Math.floor(rng() * 30),
-    });
+export const opportunities: Opportunity[] = [
+  {
+    "id": "op_000",
+    "title": "Quality Analyst",
+    "company": "Billion Engineers Private Limited",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Design_System",
+    "location": "Manesar",
+    "stipend": 6000,
+    "compensation": "₹ 6,000 - 8,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "Mechanical & Electrical Product Design"
+    ],
+    "url": "",
+    "deadlineDays": 22,
+    "postedDays": 30
+  },
+  {
+    "id": "op_001",
+    "title": "ReactJS Development",
+    "company": "KiteFishAI",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 10000,
+    "compensation": "₹ 10,000 /month",
+    "duration": "1 Month",
+    "skills": [
+      "HTML",
+      "JavaScript",
+      "Node.js",
+      "React",
+      "REST API",
+      "Redux"
+    ],
+    "url": "",
+    "deadlineDays": 11,
+    "postedDays": 12
+  },
+  {
+    "id": "op_002",
+    "title": "Backend Development",
+    "company": "BV Exim",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Backend_Dev",
+    "location": "Delhi (Hybrid)",
+    "stipend": 4000,
+    "compensation": "₹ 4,000 - 10,000 /month",
+    "duration": "2 Months",
+    "skills": [
+      "Java",
+      "MySQL",
+      "Python",
+      "Node.js"
+    ],
+    "url": "",
+    "deadlineDays": 43,
+    "postedDays": 1
+  },
+  {
+    "id": "op_003",
+    "title": "Web Development",
+    "company": "Thengg",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 4000,
+    "compensation": "₹ 4,000 - 5,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React"
+    ],
+    "url": "",
+    "deadlineDays": 6,
+    "postedDays": 26
+  },
+  {
+    "id": "op_004",
+    "title": "Full Stack Development",
+    "company": "LeadIcon Technologies Private Limited",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Bangalore",
+    "stipend": 20000,
+    "compensation": "₹ 20,000 - 30,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "Java",
+      "MySQL",
+      "HTML",
+      "CSS",
+      "SQL",
+      "React",
+      "Spring Boot"
+    ],
+    "url": "",
+    "deadlineDays": 36,
+    "postedDays": 3
+  },
+  {
+    "id": "op_005",
+    "title": "Mobile App Development",
+    "company": "SkinMinds Derma Pvt Ltd",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Mobile",
+    "location": "Work from home",
+    "stipend": 5000,
+    "compensation": "₹ 5,000 - 8,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "Wix"
+    ],
+    "url": "",
+    "deadlineDays": 25,
+    "postedDays": 18
+  },
+  {
+    "id": "op_006",
+    "title": "Software Development",
+    "company": "Neonimble.ai",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Backend_Dev",
+    "location": "Work from home",
+    "stipend": 9000,
+    "compensation": "₹ 9,000 - 25,000 /month",
+    "duration": "4 Months",
+    "skills": [
+      "MongoDB",
+      "Node.js",
+      "JSON",
+      "Computer Vision",
+      "REST API",
+      "TypeScript",
+      "Artificial intelligence"
+    ],
+    "url": "",
+    "deadlineDays": 5,
+    "postedDays": 29
+  },
+  {
+    "id": "op_007",
+    "title": "NOC Engineer",
+    "company": "Intelli Genesis Global",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Cyber_Security",
+    "location": "Mumbai",
+    "stipend": 5000,
+    "compensation": "₹ 5,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "Python",
+      "Computer Networking",
+      "Linux",
+      "Network Security"
+    ],
+    "url": "",
+    "deadlineDays": 34,
+    "postedDays": 6
+  },
+  {
+    "id": "op_008",
+    "title": "AI Product Engineering",
+    "company": "Bathxpertz",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Gurgaon",
+    "stipend": 20000,
+    "compensation": "₹ 20,000 - 30,000 /month",
+    "duration": "2 Months",
+    "skills": [
+      "Machine Learning",
+      "Prototyping",
+      "Frontend development",
+      "Production Engineering",
+      "React",
+      "Backend development",
+      "Canva"
+    ],
+    "url": "",
+    "deadlineDays": 4,
+    "postedDays": 2
+  },
+  {
+    "id": "op_009",
+    "title": "Food Production",
+    "company": "PatilKaki",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Software_Eng",
+    "location": "Navi Mumbai, Taloja, Dist Raigad",
+    "stipend": 10001,
+    "compensation": "₹ 10,001 - 10,003 /month",
+    "duration": "6 Months",
+    "skills": [
+      "Operations",
+      "MS-Excel",
+      "Coordination",
+      "Inventory Management",
+      "Production Management",
+      "Quality Assurance/Quality Control (QA/QC)"
+    ],
+    "url": "",
+    "deadlineDays": 29,
+    "postedDays": 13
+  },
+  {
+    "id": "op_010",
+    "title": "P&G Spotlight 2026 | IT",
+    "company": "Procter & Gamble (P&G)",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Data_Science",
+    "location": "Mumbai",
+    "stipend": 0,
+    "compensation": "Competitive stipend",
+    "duration": "Not Provided",
+    "skills": [
+      "Algorithms",
+      "Data Structures",
+      "Process Management",
+      "C++ Programming"
+    ],
+    "url": "",
+    "deadlineDays": 6,
+    "postedDays": 7
+  },
+  {
+    "id": "op_011",
+    "title": "Full Stack Development",
+    "company": "FailBox",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 55000,
+    "compensation": "₹ 55,000 - 3,00,000 /month",
+    "duration": "2 Months",
+    "skills": [
+      "MySQL",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Python",
+      "MongoDB",
+      "Node.js"
+    ],
+    "url": "",
+    "deadlineDays": 7,
+    "postedDays": 17
+  },
+  {
+    "id": "op_012",
+    "title": "Full Stack Development",
+    "company": "ZytePe Payments Technologies Private Limited",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 7000,
+    "compensation": "₹ 7,000 - 15,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "Python",
+      "MongoDB",
+      "PostgreSQL",
+      "Frontend development",
+      "React",
+      "FastAPI",
+      "Next.js"
+    ],
+    "url": "",
+    "deadlineDays": 29,
+    "postedDays": 1
+  },
+  {
+    "id": "op_013",
+    "title": "Software Engineer Intern - Cisco Women Internship Program",
+    "company": "CISCO",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Software_Eng",
+    "location": "Bangalore",
+    "stipend": 0,
+    "compensation": "Competitive stipend",
+    "duration": "2 Months",
+    "skills": [
+      "Python",
+      "Debugging",
+      "Troubleshooting",
+      "Object Oriented Programming (OOP)"
+    ],
+    "url": "",
+    "deadlineDays": 38,
+    "postedDays": 3
+  },
+  {
+    "id": "op_014",
+    "title": "Software Development",
+    "company": "BespokeBrush",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Faridabad",
+    "stipend": 8000,
+    "compensation": "₹ 8,000 - 10,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Node.js"
+    ],
+    "url": "",
+    "deadlineDays": 16,
+    "postedDays": 20
+  },
+  {
+    "id": "op_015",
+    "title": "Front End - Full Stack Development",
+    "company": "SHIPZY TECHNOLOGIES",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Backend_Dev",
+    "location": "Noida, Delhi (Hybrid)",
+    "stipend": 15000,
+    "compensation": "₹ 15,000 - 40,000 /month",
+    "duration": "2 Months",
+    "skills": [
+      "Java",
+      "PHP",
+      "Python",
+      "MongoDB",
+      "Node.js",
+      "Express.js"
+    ],
+    "url": "",
+    "deadlineDays": 42,
+    "postedDays": 18
+  },
+  {
+    "id": "op_016",
+    "title": "Full Stack Development",
+    "company": "Efficient Corporates",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 3000,
+    "compensation": "₹ 3,000 - 14,000 /month",
+    "duration": "4 Months",
+    "skills": [
+      "MySQL",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Python",
+      "MongoDB",
+      "Node.js"
+    ],
+    "url": "",
+    "deadlineDays": 5,
+    "postedDays": 18
+  },
+  {
+    "id": "op_017",
+    "title": "iOS Developer",
+    "company": "CIVILS WEB PRIVATE LIMITED",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Mobile",
+    "location": "Delhi, Noida",
+    "stipend": 8000,
+    "compensation": "₹ 8,000 - 10,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "GitHub",
+      "Swift"
+    ],
+    "url": "",
+    "deadlineDays": 39,
+    "postedDays": 12
+  },
+  {
+    "id": "op_018",
+    "title": "Software Testing",
+    "company": "Model Verse",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Data_Science",
+    "location": "Work from home",
+    "stipend": 1500,
+    "compensation": "₹ 1,500 /month",
+    "duration": "1 Month",
+    "skills": [
+      "Software Testing",
+      "Manual Testing",
+      "Database Testing",
+      "Usability Testing"
+    ],
+    "url": "",
+    "deadlineDays": 5,
+    "postedDays": 7
+  },
+  {
+    "id": "op_019",
+    "title": "Web Development",
+    "company": "Scrum Digital Private Limited",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Jaipur",
+    "stipend": 2000,
+    "compensation": "₹ 2,000 - 10,000 /month",
+    "duration": "6 Weeks",
+    "skills": [
+      "PHP",
+      "MySQL",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "jQuery",
+      "Python"
+    ],
+    "url": "",
+    "deadlineDays": 4,
+    "postedDays": 17
+  },
+  {
+    "id": "op_020",
+    "title": "Full Stack Development",
+    "company": "My Healio",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 1000,
+    "compensation": "₹ 1,000 - 3,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "MySQL",
+      "HTML",
+      "JavaScript",
+      "Python",
+      "Node.js",
+      "React"
+    ],
+    "url": "",
+    "deadlineDays": 10,
+    "postedDays": 9
+  },
+  {
+    "id": "op_021",
+    "title": "Business Automation",
+    "company": "Society For Health And Medical Technology",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Data_Science",
+    "location": "Work from home",
+    "stipend": 2000,
+    "compensation": "₹ 2,000 - 5,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "Python",
+      "Data Structures",
+      "Problem Solving",
+      "APIs"
+    ],
+    "url": "",
+    "deadlineDays": 28,
+    "postedDays": 4
+  },
+  {
+    "id": "op_022",
+    "title": "Data Mining & Data Entry",
+    "company": "Code Vyasa",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Data_Science",
+    "location": "Delhi, Ghaziabad, Gurgaon, Gautam Buddha Nagar, Noida (Hybrid)",
+    "stipend": 6000,
+    "compensation": "₹ 6,000 - 10,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "MS-Office",
+      "Typing",
+      "MS-Excel",
+      "Copywriting",
+      "Data entry",
+      "English Proficiency (Spoken)",
+      "English Proficiency (Written)"
+    ],
+    "url": "",
+    "deadlineDays": 36,
+    "postedDays": 3
+  },
+  {
+    "id": "op_023",
+    "title": "Full Stack Development",
+    "company": "Spatial Creatives",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Software_Eng",
+    "location": "Work from home",
+    "stipend": 8000,
+    "compensation": "₹ 8,000 - 10,000 /month",
+    "duration": "2 Months",
+    "skills": [
+      "JavaScript",
+      "Python",
+      "Unity Engine"
+    ],
+    "url": "",
+    "deadlineDays": 38,
+    "postedDays": 9
+  },
+  {
+    "id": "op_024",
+    "title": "Web Development",
+    "company": "Lucidbox Technologies",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Software_Eng",
+    "location": "Guwahati",
+    "stipend": 6000,
+    "compensation": "₹ 6,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "CSS",
+      "Adobe Photoshop",
+      "WordPress",
+      "Shopify"
+    ],
+    "url": "",
+    "deadlineDays": 37,
+    "postedDays": 26
+  },
+  {
+    "id": "op_025",
+    "title": "Mobile App Development",
+    "company": "SoberBuddy",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 10000,
+    "compensation": "₹ 10,000 - 20,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "Java",
+      "Node.js",
+      "React",
+      "Flutter",
+      "React Native",
+      "iOS",
+      "Android"
+    ],
+    "url": "",
+    "deadlineDays": 45,
+    "postedDays": 5
+  },
+  {
+    "id": "op_026",
+    "title": "Full Stack Development",
+    "company": "Willovate Private Limited",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 2000,
+    "compensation": "₹ 2,000 - 10,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "JavaScript",
+      "Python",
+      "AngularJS",
+      "Node.js",
+      "React"
+    ],
+    "url": "",
+    "deadlineDays": 8,
+    "postedDays": 18
+  },
+  {
+    "id": "op_027",
+    "title": "Mobile App Development",
+    "company": "Mitrah Technology",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Mobile",
+    "location": "Bhayander (Hybrid)",
+    "stipend": 8000,
+    "compensation": "₹ 8,000 - 10,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "JSON",
+      "Flutter",
+      "Android",
+      "APIs"
+    ],
+    "url": "",
+    "deadlineDays": 38,
+    "postedDays": 20
+  },
+  {
+    "id": "op_028",
+    "title": "Full Stack Development",
+    "company": "Kosqu Technolabs",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Navi Mumbai",
+    "stipend": 8000,
+    "compensation": "₹ 8,000 - 15,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "MySQL",
+      "Python",
+      "MongoDB",
+      "AngularJS",
+      "Node.js",
+      "React",
+      "React Native"
+    ],
+    "url": "",
+    "deadlineDays": 14,
+    "postedDays": 11
+  },
+  {
+    "id": "op_029",
+    "title": "Web Development",
+    "company": "High Beam Global",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Gurgaon",
+    "stipend": 10000,
+    "compensation": "₹ 10,000 - 15,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "PHP",
+      "MySQL",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "CodeIgniter",
+      "Analytical Thinking"
+    ],
+    "url": "",
+    "deadlineDays": 8,
+    "postedDays": 17
+  },
+  {
+    "id": "op_030",
+    "title": "React Native Development",
+    "company": "MANBAL.AI",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 3000,
+    "compensation": "₹ 3,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "JavaScript",
+      "Node.js",
+      "React Native",
+      "Tailwind CSS"
+    ],
+    "url": "",
+    "deadlineDays": 6,
+    "postedDays": 18
+  },
+  {
+    "id": "op_031",
+    "title": "Digital Marketing & Social Media",
+    "company": "STAND N STRIDE FOUNDATION",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Design_System",
+    "location": "Work from home",
+    "stipend": 0,
+    "compensation": "Unpaid",
+    "duration": "6 Months",
+    "skills": [
+      "Content Writing",
+      "WordPress",
+      "Creative Writing",
+      "CMS (Content Management System)",
+      "Computer skills",
+      "Effective Communication",
+      "Digital Design"
+    ],
+    "url": "",
+    "deadlineDays": 5,
+    "postedDays": 19
+  },
+  {
+    "id": "op_032",
+    "title": "Embedded C",
+    "company": "Neonflake Enterprises (OPC) Private Limited",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Design_System",
+    "location": "Secunderabad, Hyderabad",
+    "stipend": 12000,
+    "compensation": "₹ 12,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "Raspberry Pi",
+      "Embedded Systems",
+      "Arduino"
+    ],
+    "url": "",
+    "deadlineDays": 15,
+    "postedDays": 15
+  },
+  {
+    "id": "op_033",
+    "title": "Internet Of Things (IoT)",
+    "company": "Let's Try",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Design_System",
+    "location": "Work from home",
+    "stipend": 2000,
+    "compensation": "₹ 2,000 - 5,000 /month",
+    "duration": "1 Month",
+    "skills": [
+      "ARM Microcontroller",
+      "Raspberry Pi",
+      "Embedded Systems",
+      "Arduino",
+      "PCB Design",
+      "Internet of Things (IoT)"
+    ],
+    "url": "",
+    "deadlineDays": 45,
+    "postedDays": 17
+  },
+  {
+    "id": "op_034",
+    "title": "Web Development",
+    "company": "Lynvo",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 3000,
+    "compensation": "₹ 3,000 - 10,000 /month",
+    "duration": "2 Months",
+    "skills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "WordPress"
+    ],
+    "url": "",
+    "deadlineDays": 29,
+    "postedDays": 24
+  },
+  {
+    "id": "op_035",
+    "title": "Full Stack Development",
+    "company": "Rabblehub",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 3000,
+    "compensation": "₹ 3,000 - 3,500 /month",
+    "duration": "1 Month",
+    "skills": [
+      "HTML",
+      "CSS",
+      "Python",
+      "MongoDB",
+      "React",
+      "MERN"
+    ],
+    "url": "",
+    "deadlineDays": 22,
+    "postedDays": 14
+  },
+  {
+    "id": "op_036",
+    "title": "Web Development",
+    "company": "Connecting Dots ERP",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Pune",
+    "stipend": 5000,
+    "compensation": "₹ 5,000 - 8,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "MongoDB",
+      "Node.js",
+      "Express.js",
+      "React",
+      "Redux",
+      "Next.js",
+      "Three.js"
+    ],
+    "url": "",
+    "deadlineDays": 39,
+    "postedDays": 29
+  },
+  {
+    "id": "op_037",
+    "title": "Full Stack Development",
+    "company": "Appe Technologies",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Bhilai, Raipur, Chhattisgarh (Hybrid)",
+    "stipend": 7000,
+    "compensation": "₹ 7,000 - 10,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "MySQL",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Python"
+    ],
+    "url": "",
+    "deadlineDays": 31,
+    "postedDays": 11
+  },
+  {
+    "id": "op_038",
+    "title": "Software Development",
+    "company": "Posterity Consulting",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Data_Science",
+    "location": "Noida",
+    "stipend": 20000,
+    "compensation": "₹ 20,000 - 25,000 /month",
+    "duration": "6 Months",
+    "skills": [
+      "Algorithms",
+      "Data Structures",
+      "Object Oriented Programming (OOP)"
+    ],
+    "url": "",
+    "deadlineDays": 21,
+    "postedDays": 7
+  },
+  {
+    "id": "op_039",
+    "title": "Web Development",
+    "company": "Zebnux Technologies",
+    "source": "Internshala",
+    "type": "Internship",
+    "category": "Frontend_Dev",
+    "location": "Work from home",
+    "stipend": 4000,
+    "compensation": "₹ 4,000 - 7,000 /month",
+    "duration": "3 Months",
+    "skills": [
+      "HTML",
+      "WordPress",
+      "Search Engine Optimization (SEO)",
+      "Web Design"
+    ],
+    "url": "",
+    "deadlineDays": 13,
+    "postedDays": 22
+  },
+  {
+    "id": "op_040",
+    "title": "Bharat Academix CodeQuest",
+    "company": "Bharat Academix",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/bharat-academix-codequest-bharat-academix-1693833",
+    "deadlineDays": 17,
+    "postedDays": 2
+  },
+  {
+    "id": "op_041",
+    "title": "DevFusion 3.O | The Developers Hackathon",
+    "company": "Indian Institute of Technology (IIT), Bombay",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/devfusion-3o-the-developers-hackathon-iit-bombay-1693413",
+    "deadlineDays": 38,
+    "postedDays": 9
+  },
+  {
+    "id": "op_042",
+    "title": "SmartAIthon 2026 Campus Ambassador Program",
+    "company": "IEEE KCE Student Branch CIS Chapter",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "AI_Research",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/smartaithon-2026-campus-ambassador-program-httpsbitlysmartaithon-ieee-kce-student-branch-cis-chapter-1687351",
+    "deadlineDays": 35,
+    "postedDays": 15
+  },
+  {
+    "id": "op_043",
+    "title": "Reimagining Urban Mobility & Daily Commute in India  2026",
+    "company": "SRM Institute of Science and Technology (SRMIST), Kattankulathur, Chennai",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "AI_Research",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/reimagining-urban-mobility-daily-commute-in-india-2026-srm-institute-of-science-and-technology-kattankulathur-1693568",
+    "deadlineDays": 23,
+    "postedDays": 23
+  },
+  {
+    "id": "op_044",
+    "title": "Simply Updify InnovateX 2026 – National Level Online Hackathon",
+    "company": "Simply Updify",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/simply-updify-innovatex-2026-national-level-online-hackathon-simply-updify-1692241",
+    "deadlineDays": 30,
+    "postedDays": 9
+  },
+  {
+    "id": "op_045",
+    "title": "Amazon ML Summer School 2026",
+    "company": "Amazon",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Data_Science",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/crp-amazon-ml-summer-school-2026-amazon-1688859",
+    "deadlineDays": 40,
+    "postedDays": 2
+  },
+  {
+    "id": "op_046",
+    "title": "CryptX Files",
+    "company": "Shiv Nadar University (SNU), Greater Noida",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/cryptx-files-shiv-nadar-university-snu-greater-noida-1692533",
+    "deadlineDays": 9,
+    "postedDays": 16
+  },
+  {
+    "id": "op_047",
+    "title": "Hackverse",
+    "company": "Mumbai University (MU), Mumbai",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Supreme Business Park,,Powai, Maharashtra, India",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/hackverse-mumbai-university-mu-mumbai-1692481",
+    "deadlineDays": 28,
+    "postedDays": 5
+  },
+  {
+    "id": "op_048",
+    "title": "Nexora'26",
+    "company": "Manipal University (MU), Jaipur",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/nexora26-manipal-university-mu-jaipur-1691060",
+    "deadlineDays": 23,
+    "postedDays": 4
+  },
+  {
+    "id": "op_049",
+    "title": "AI Startup Buildathon 2026 – Beauty Salon Marketplace Challenge",
+    "company": "Superxgen",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "AI_Research",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/ai-startup-buildathon-2026-beauty-salon-marketplace-challenge-superxgen-ai-builder-series-superxgen-1691905",
+    "deadlineDays": 33,
+    "postedDays": 13
+  },
+  {
+    "id": "op_050",
+    "title": "Biothon 2026",
+    "company": "Marwadi University (MU), Gujarat",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Marwadi University,Rajkot, Gujarat, India",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/biothon-2026-marwadi-university-mu-gujarat-1690978",
+    "deadlineDays": 4,
+    "postedDays": 30
+  },
+  {
+    "id": "op_051",
+    "title": "NexWave",
+    "company": "Jharkhand Raksha Shakti University",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/nexwave-jharkhand-raksha-shakti-university-1690790",
+    "deadlineDays": 44,
+    "postedDays": 2
+  },
+  {
+    "id": "op_052",
+    "title": "Build-A-Thon",
+    "company": "Unison",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Design_System",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/build-a-thon-unison-1691536",
+    "deadlineDays": 37,
+    "postedDays": 18
+  },
+  {
+    "id": "op_053",
+    "title": "Hack-The-Den",
+    "company": "Coders Den",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Galgotias University,Greater Noida, Uttar Pradesh, India",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/hack-the-den-coders-den-1690215",
+    "deadlineDays": 22,
+    "postedDays": 10
+  },
+  {
+    "id": "op_054",
+    "title": "Venture Vortex - Startup and Business Plan Contest",
+    "company": "K S Institute of Technology",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/venture-vortex-startup-and-business-plan-contest-k-s-institute-of-technology-1690749",
+    "deadlineDays": 24,
+    "postedDays": 19
+  },
+  {
+    "id": "op_055",
+    "title": "AI Nexus",
+    "company": "SRM Connects",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "AI_Research",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/ai-nexus-srm-connects-1686975",
+    "deadlineDays": 33,
+    "postedDays": 18
+  },
+  {
+    "id": "op_056",
+    "title": "QuizCred BuildFest",
+    "company": "QuizCred",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Design_System",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/quizcred-buildfest-quizcred-1690772",
+    "deadlineDays": 31,
+    "postedDays": 2
+  },
+  {
+    "id": "op_057",
+    "title": "HackArena 2.0 – Online Zonals",
+    "company": "Indraprastha Institute of Information Technology (IIIT), Delhi",
+    "source": "Unstop",
+    "type": "Hackathon",
+    "category": "Software_Eng",
+    "location": "Online",
+    "stipend": 50000,
+    "compensation": "",
+    "duration": "",
+    "skills": [],
+    "url": "https://unstop.com/hackathons/hackarena-20-online-zonals-indraprastha-institute-of-information-technology-iiit-delhi-1690973",
+    "deadlineDays": 7,
+    "postedDays": 30
   }
-  return out;
-})();
+];
