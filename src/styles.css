@@ -29,7 +29,7 @@
   html, body {
     font-family: var(--font-mono);
     background-color: var(--surface);
-    color: #a1a1aa;
+    color: #e4e4e7;
   }
 }
 
@@ -186,7 +186,7 @@
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--surface);
+    color: #e4e4e7;
   }
 }
