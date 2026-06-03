@@ -7,6 +7,7 @@ import { CategoryChart } from "@/components/dashboard/CategoryChart";
 import { GeoCard } from "@/components/dashboard/GeoCard";
 import { DataTable } from "@/components/dashboard/DataTable";
 import { TickerRail } from "@/components/dashboard/TickerRail";
+import { SourceMix } from "@/components/dashboard/SourceMix";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,7 +31,8 @@ function Index() {
   const [activeSources, setActiveSources] = useState<Set<Source>>(new Set(ALL_SOURCES));
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [location, setLocation] = useState<string>("ALL");
-  const [page, setPage] = useState(0);
+  const [internPage, setInternPage] = useState(0);
+  const [hackPage, setHackPage] = useState(0);
 
   const allCategories = useMemo(
     () => Array.from(new Set(OPPORTUNITIES.map((o) => o.category))).sort(),
@@ -83,9 +85,25 @@ function Index() {
       .sort((a, b) => b.value - a.value);
   }, [filtered]);
 
-  const sortedRows = useMemo(
-    () => [...filtered].sort((a, b) => a.deadlineDays - b.deadlineDays),
+  const internshipRows = useMemo(
+    () => filtered.filter((o) => o.type === "internship").sort((a, b) => a.deadlineDays - b.deadlineDays),
     [filtered],
+  );
+  const hackathonRows = useMemo(
+    () => filtered.filter((o) => o.type === "hackathon").sort((a, b) => a.deadlineDays - b.deadlineDays),
+    [filtered],
+  );
+
+  const sourceMix = useMemo(() => {
+    const m = new Map<Source, number>();
+    ALL_SOURCES.forEach((s) => m.set(s, 0));
+    filtered.forEach((o) => m.set(o.source, (m.get(o.source) ?? 0) + 1));
+    return Array.from(m.entries()).map(([source, value]) => ({ source, value }));
+  }, [filtered]);
+
+  const hackathonPool = useMemo(
+    () => hackathonRows.reduce((s, o) => s + o.stipend, 0),
+    [hackathonRows],
   );
 
   const toggleSource = (s: Source) => {
@@ -94,7 +112,8 @@ function Index() {
       if (next.has(s)) next.delete(s); else next.add(s);
       return next;
     });
-    setPage(0);
+    setInternPage(0);
+    setHackPage(0);
   };
 
   const tickerItems = [
@@ -117,11 +136,11 @@ function Index() {
         toggleSource={toggleSource}
         categories={allCategories}
         activeCategory={activeCategory}
-        setCategory={(c) => { setActiveCategory(c); setPage(0); }}
+        setCategory={(c) => { setActiveCategory(c); setInternPage(0); setHackPage(0); }}
         locations={allLocations}
         location={location}
-        setLocation={(l) => { setLocation(l); setPage(0); }}
-        onExecute={() => setPage(0)}
+        setLocation={(l) => { setLocation(l); setInternPage(0); setHackPage(0); }}
+        onExecute={() => { setInternPage(0); setHackPage(0); }}
       />
 
       <main className="flex-1 flex flex-col overflow-hidden">
@@ -131,9 +150,29 @@ function Index() {
           <div className="grid grid-cols-12 gap-6">
             <CategoryChart data={categoryData} />
             <GeoCard data={geoData} />
+            <SourceMix
+              data={sourceMix}
+              internshipAvg={avgStipend}
+              hackathonPool={hackathonPool}
+            />
           </div>
 
-          <DataTable rows={sortedRows} page={page} setPage={setPage} perPage={12} />
+          <DataTable
+            rows={internshipRows}
+            page={internPage}
+            setPage={setInternPage}
+            perPage={10}
+            title="Internships // Sorted_By_Deadline"
+            accent="brand"
+          />
+          <DataTable
+            rows={hackathonRows}
+            page={hackPage}
+            setPage={setHackPage}
+            perPage={10}
+            title="Hackathons // Sorted_By_Deadline"
+            accent="fuchsia"
+          />
         </div>
 
         <TickerRail items={tickerItems} />

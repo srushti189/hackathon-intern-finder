@@ -10,29 +10,41 @@ export function CategoryChart({ data }: { data: Bar[] }) {
         </h2>
         <span className="text-[10px] text-zinc-500">LIVE_DATA</span>
       </div>
-      <div className="h-48 flex items-end gap-2">
-        {data.map((d) => {
-          const h = (d.value / max) * 100;
-          return (
-            <div key={d.label} className="flex-1 bg-zinc-800 relative group">
-              <div
-                className="absolute bottom-0 w-full bg-brand/40 group-hover:bg-brand/70 transition-colors"
-                style={{ height: `${h}%` }}
-              />
-              <div className="absolute -top-6 left-0 right-0 text-center text-[9px] opacity-0 group-hover:opacity-100 transition-opacity text-brand">
-                {d.value}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="flex gap-2 mt-2">
-        {data.map((d) => (
-          <div key={d.label} className="flex-1 text-[9px] text-zinc-500 uppercase truncate text-center">
-            {d.label}
+      {data.length === 0 ? (
+        <div className="h-56 flex items-center justify-center text-xs text-zinc-600">
+          NO_DATA_IN_SELECTION
+        </div>
+      ) : (
+        <>
+          <div className="h-56 flex items-end gap-3 border-b border-zinc-800/40 pb-1">
+            {data.map((d) => {
+              const h = (d.value / max) * 100;
+              return (
+                <div key={d.label} className="flex-1 relative group flex flex-col justify-end h-full">
+                  <span className="text-[10px] text-brand text-center mb-1 font-medium">
+                    {d.value}
+                  </span>
+                  <div
+                    className="w-full bg-gradient-to-t from-brand/60 to-brand/20 border-t border-brand group-hover:from-brand/80 group-hover:to-brand/40 transition-colors"
+                    style={{ height: `${h}%` }}
+                  />
+                </div>
+              );
+            })}
           </div>
-        ))}
-      </div>
+          <div className="flex gap-3 mt-2">
+            {data.map((d) => (
+              <div
+                key={d.label}
+                className="flex-1 text-[9px] text-zinc-400 uppercase truncate text-center"
+                title={d.label}
+              >
+                {d.label.replace(/_/g, " ")}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

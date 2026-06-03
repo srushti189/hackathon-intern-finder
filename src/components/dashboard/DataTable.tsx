@@ -20,22 +20,25 @@ function providerBadge(src: Opportunity["source"]) {
   return styles[src];
 }
 
-export function DataTable({ rows, page, setPage, perPage }: {
+export function DataTable({ rows, page, setPage, perPage, title, accent }: {
   rows: Opportunity[];
   page: number;
   setPage: (n: number) => void;
   perPage: number;
+  title?: string;
+  accent?: "brand" | "fuchsia";
 }) {
   const totalPages = Math.max(1, Math.ceil(rows.length / perPage));
   const slice = rows.slice(page * perPage, page * perPage + perPage);
-
+  const accentText = accent === "fuchsia" ? "text-fuchsia-400" : "text-brand/60";
+  const heading = title ?? "Stream_Dump // Primary_Listings";
   return (
     <div className="border border-zinc-800/50 bg-panel/50 overflow-hidden ring-1 ring-black/5">
       <div className="px-4 py-3 border-b border-zinc-800/50 flex justify-between items-center bg-zinc-900/50">
         <span className="text-[10px] uppercase font-semibold text-zinc-100">
-          Stream_Dump // Primary_Listings
+          {heading}
         </span>
-        <span className="text-[10px] text-brand/60">{rows.length} RECORDS</span>
+        <span className={`text-[10px] ${accentText}`}>{rows.length} RECORDS</span>
       </div>
       <table className="w-full text-left">
         <thead className="text-[10px] text-zinc-500 uppercase border-b border-zinc-800/50">
